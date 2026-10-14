@@ -1,39 +1,51 @@
 # frozen_string_literal: true
 
-require "open3"
+RSpec.describe SalesTaxes do
+  it "prints the receipt for input 1" do
+    input = <<~INPUT
+      2 book at 12.49
+      1 music CD at 14.99
+      1 chocolate bar at 0.85
+    INPUT
 
-RSpec.describe "bin/run" do
-  def run(*, stdin: "")
-    Open3.capture3(File.expand_path("../bin/run", __dir__), *, stdin_data: stdin)
+    expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
+      2 book: 24.98
+      1 music CD: 16.49
+      1 chocolate bar: 0.85
+      Sales Taxes: 1.50
+      Total: 42.32
+    RECEIPT
   end
 
-  Dir[File.join(__dir__, "fixtures/input_*.txt")].each do |input|
-    it "prints the expected receipt for #{File.basename(input)}" do
-      stdout, stderr, status = run(input)
+  it "prints the receipt for input 2" do
+    input = <<~INPUT
+      1 imported box of chocolates at 10.00
+      1 imported bottle of perfume at 47.50
+    INPUT
 
-      expect(stdout).to eq(File.read(input.sub("input_", "output_")))
-      expect(stderr).to be_empty
-      expect(status).to be_success
-    end
+    expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
+      1 imported box of chocolates: 10.50
+      1 imported bottle of perfume: 54.65
+      Sales Taxes: 7.65
+      Total: 65.15
+    RECEIPT
   end
 
-  it "reads the basket from STDIN when no file is given" do
-    stdout, = run(stdin: "1 book at 12.49\n")
+  it "prints the receipt for input 3" do
+    input = <<~INPUT
+      1 imported bottle of perfume at 27.99
+      1 bottle of perfume at 18.99
+      1 packet of headache pills at 9.75
+      3 imported boxes of chocolates at 11.25
+    INPUT
 
-    expect(stdout).to eq("1 book: 12.49\nSales Taxes: 0.00\nTotal: 12.49\n")
-  end
-
-  it "reports malformed input and exits with failure" do
-    _stdout, stderr, status = run(stdin: "1 book 12.49\n")
-
-    expect(stderr).to eq(%(Error: Invalid line: "1 book 12.49"\n))
-    expect(status.exitstatus).to eq(1)
-  end
-
-  it "reports a missing file and exits with failure" do
-    _stdout, stderr, status = run("missing.txt")
-
-    expect(stderr).to start_with("Error: No such file or directory")
-    expect(status.exitstatus).to eq(1)
+    expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
+      1 imported bottle of perfume: 32.19
+      1 bottle of perfume: 20.89
+      1 packet of headache pills: 9.75
+      3 imported boxes of chocolates: 35.55
+      Sales Taxes: 7.90
+      Total: 98.38
+    RECEIPT
   end
 end

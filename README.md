@@ -28,8 +28,7 @@ bundle exec rspec
 bundle exec rubocop
 ```
 
-The end-to-end spec runs `bin/run` on the three exercise inputs and compares the output
-with the expected receipts in `spec/fixtures`.
+The end-to-end spec checks the three exercise inputs against their expected receipts.
 
 ## Docker
 
