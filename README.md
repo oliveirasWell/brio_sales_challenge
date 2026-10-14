@@ -37,18 +37,3 @@ docker build -t sales-taxes .
 docker run --rm sales-taxes                                      # runs the specs
 docker run --rm sales-taxes bin/run spec/fixtures/input_3.txt
 ```
-
-## Design
-
-```
-input -> Parser -> Calculator (uses Rules) -> Reporter -> receipt
-```
-
-- `Parser` turns lines into immutable `Item`s.
-- `Rules` holds the tax policy: 10% basic tax except books, food and medical products,
-  plus 5% on imported goods.
-- `Calculator` rounds tax up to the nearest 0.05 per unit and totals the basket.
-- `Reporter` formats the receipt.
-
-Money uses `BigDecimal`. Objects are immutable and hold no shared state, so they are
-thread-safe.
