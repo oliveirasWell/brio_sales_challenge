@@ -8,7 +8,6 @@ require_relative "sales_taxes/parser"
 require_relative "sales_taxes/calculator"
 require_relative "sales_taxes/reporter"
 
-# Builds sales receipts for shopping baskets: parse -> calculate -> report.
 module SalesTaxes
   def self.receipt_for(input)
     items = Parser.new.parse(input)

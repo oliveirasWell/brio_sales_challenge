@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module SalesTaxes
-  # Applies tax rules to items and totals the basket.
   class Calculator
     ROUNDING_STEP = BigDecimal("0.05")
 
@@ -24,7 +23,6 @@ module SalesTaxes
 
     private
 
-    # Tax is rounded per unit, as the shelf price is the price of one unit.
     def unit_tax(item) = round_up(item.unit_price * @rules.rate_for(item))
 
     def round_up(amount) = (amount / ROUNDING_STEP).ceil * ROUNDING_STEP

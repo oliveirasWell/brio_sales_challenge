@@ -14,12 +14,12 @@ RSpec.describe SalesTaxes::Parser do
   end
 
   [
-    "book at 12.49",       # missing quantity
-    "0 book at 12.49",     # zero quantity
-    "1 book 12.49",        # missing "at"
-    "1 book at",           # missing price
-    "1 book at 12.5",      # price without two decimals
-    "1 book at -12.49"     # negative price
+    "book at 12.49",
+    "0 book at 12.49",
+    "1 book 12.49",
+    "1 book at",
+    "1 book at 12.5",
+    "1 book at -12.49"
   ].each do |line|
     it "rejects #{line.inspect}" do
       expect { parser.parse(line) }.to raise_error(SalesTaxes::ParseError, "Invalid line: #{line.inspect}")

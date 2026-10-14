@@ -3,7 +3,6 @@
 module SalesTaxes
   class ParseError < StandardError; end
 
-  # Turns basket lines such as "1 imported box of chocolates at 10.00" into Items.
   class Parser
     LINE_FORMAT = /\A(?<quantity>[1-9]\d*) (?<name>.+) at (?<price>\d+\.\d{2})\z/
 

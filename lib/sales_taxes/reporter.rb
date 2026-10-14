@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module SalesTaxes
-  # Renders a calculated basket as receipt text.
   class Reporter
     def report(result)
       lines = result.lines.map { "#{_1.item.quantity} #{_1.item.name}: #{money(_1.total)}" }

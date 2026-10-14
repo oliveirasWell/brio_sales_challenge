@@ -4,42 +4,35 @@ require "open3"
 require "rbconfig"
 
 RSpec.describe "bin/run" do
-  let(:run_script) { File.expand_path("../bin/run", __dir__) }
+  inputs = Dir[File.join(__dir__, "fixtures/input_*.txt")].sort
 
-  def fixture(name) = File.expand_path("fixtures/#{name}", __dir__)
+  def expected_output(input) = File.read(input.sub("input_", "output_"))
 
-  # bin/run uses only the standard library, so run it outside the bundle like a user would.
-  def run(*args, **opts) = Bundler.with_unbundled_env { Open3.capture3(RbConfig.ruby, run_script, *args, **opts) }
+  def run(*args, **opts)
+    script = File.expand_path("../bin/run", __dir__)
+    stdout, stderr, status = Bundler.with_unbundled_env { Open3.capture3(RbConfig.ruby, script, *args, **opts) }
+    [stdout, stderr, status.exitstatus]
+  end
 
-  (1..3).each do |n|
-    it "prints the expected receipt for input #{n}" do
-      stdout, stderr, status = run(fixture("input_#{n}.txt"))
-
-      expect(stderr).to be_empty
-      expect(status).to be_success
-      expect(stdout).to eq(File.read(fixture("output_#{n}.txt")))
+  inputs.each do |input|
+    it "prints the expected receipt for #{File.basename(input)}" do
+      expect(run(input)).to eq([expected_output(input), "", 0])
     end
   end
 
-  it "reads the basket from STDIN when no file is given" do
-    stdout, _stderr, status = run(stdin_data: File.read(fixture("input_1.txt")))
+  it "prints one receipt per basket, separated by a blank line" do
+    expect(run(*inputs)).to eq([inputs.map { expected_output(_1) }.join("\n"), "", 0])
+  end
 
-    expect(status).to be_success
-    expect(stdout).to eq(File.read(fixture("output_1.txt")))
+  it "reads the basket from STDIN when no file is given" do
+    expect(run(stdin_data: File.read(inputs.first))).to eq([expected_output(inputs.first), "", 0])
   end
 
   it "reports malformed input and exits with failure" do
-    stdout, stderr, status = run(stdin_data: "1 book 12.49\n")
-
-    expect(stdout).to be_empty
-    expect(stderr).to eq(%(Error: Invalid line: "1 book 12.49"\n))
-    expect(status.exitstatus).to eq(1)
+    expect(run(stdin_data: "1 book 12.49\n")).to eq(["", %(Error: Invalid line: "1 book 12.49"\n), 1])
   end
 
   it "reports a missing file and exits with failure" do
-    _stdout, stderr, status = run("missing.txt")
-
-    expect(stderr).to start_with("Error: No such file or directory")
-    expect(status.exitstatus).to eq(1)
+    expect(run("missing.txt")).to match(["", start_with("Error: No such file or directory"), 1])
   end
 end
