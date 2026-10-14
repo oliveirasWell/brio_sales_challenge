@@ -27,4 +27,19 @@ RSpec.describe "bin/run" do
     expect(status).to be_success
     expect(stdout).to eq(File.read(fixture("output_1.txt")))
   end
+
+  it "reports malformed input and exits with failure" do
+    stdout, stderr, status = run(stdin_data: "1 book 12.49\n")
+
+    expect(stdout).to be_empty
+    expect(stderr).to eq(%(Error: Invalid line: "1 book 12.49"\n))
+    expect(status.exitstatus).to eq(1)
+  end
+
+  it "reports a missing file and exits with failure" do
+    _stdout, stderr, status = run("missing.txt")
+
+    expect(stderr).to start_with("Error: No such file or directory")
+    expect(status.exitstatus).to eq(1)
+  end
 end

@@ -5,9 +5,8 @@
 
 require_relative "../lib/sales_taxes"
 
-baskets = ARGV.empty? ? [$stdin.read] : ARGV.map { File.read(_1) }
-
 begin
+  baskets = ARGV.empty? ? [$stdin.read] : ARGV.map { File.read(_1) }
   puts baskets.map { SalesTaxes.receipt_for(_1) }.join("\n")
 rescue SalesTaxes::ParseError, SystemCallError => e
   warn "Error: #{e.message}"
