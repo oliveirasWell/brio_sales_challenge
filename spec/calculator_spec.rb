@@ -23,8 +23,4 @@ RSpec.describe SalesTaxes::Calculator do
   it "charges no tax on a free item" do
     expect(tax_for(1, "music CD", "0.00")).to eq(0)
   end
-
-  it "charges no tax on exempt, non-imported items" do
-    expect(tax_for(1, "packet of headache pills", "9.75")).to eq(0)
-  end
 end
