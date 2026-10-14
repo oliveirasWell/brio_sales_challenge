@@ -3,7 +3,7 @@
 module SalesTaxes
   class Reporter
     def report(result)
-      lines = result.lines.map { "#{_1.item.quantity} #{_1.item.name}: #{money(_1.total)}" }
+      lines = result.lines.map { |line| "#{line.item.quantity} #{line.item.name}: #{money(line.total)}" }
       lines << "Sales Taxes: #{money(result.sales_taxes)}"
       lines << "Total: #{money(result.total)}"
       "#{lines.join("\n")}\n"

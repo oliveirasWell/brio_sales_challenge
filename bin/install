@@ -3,9 +3,7 @@
 
 require "rbconfig"
 
-if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("3.3")
-  abort "Ruby >= 3.3 is required (found #{RUBY_VERSION})."
-end
+abort "Ruby >= 3.4 is required (found #{RUBY_VERSION})." if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("3.4")
 
 Dir.chdir(File.expand_path("..", __dir__))
 exec RbConfig.ruby, "-S", "bundle", "install"

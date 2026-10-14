@@ -10,7 +10,7 @@ module SalesTaxes
       lines = input.each_line(chomp: true).map(&:strip).reject(&:empty?)
       raise ParseError, "Basket is empty" if lines.empty?
 
-      lines.map { parse_line(_1) }
+      lines.map { parse_line(it) }
     end
 
     private

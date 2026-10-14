@@ -6,7 +6,7 @@ RSpec.describe SalesTaxes::Parser do
   it "ignores blank lines" do
     items = parser.parse("\n1 book at 12.49\n\n")
 
-    expect(items).to eq([SalesTaxes::Item.new(quantity: 1, name: "book", unit_price: BigDecimal("12.49"))])
+    expect(items).to contain_exactly(have_attributes(quantity: 1, name: "book", unit_price: BigDecimal("12.49")))
   end
 
   it "rejects an empty basket" do
