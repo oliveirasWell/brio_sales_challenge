@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Installs the test dependencies (RSpec) using the Ruby that runs this script.
+
+require "rbconfig"
+
+if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("3.3")
+  abort "Ruby >= 3.3 is required (found #{RUBY_VERSION})."
+end
+
+Dir.chdir(File.expand_path("..", __dir__))
+exec RbConfig.ruby, "-S", "bundle", "install"
