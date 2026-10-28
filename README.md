@@ -1,7 +1,7 @@
 # Sales Taxes
 
 Prints shopping receipts with sales taxes, as described in the
-[exercise](https://gist.github.com/safplatform/792314da6b54346594432f30d5868f36).
+[exercise](docs/exercise.md).
 
 ## Setup
 
