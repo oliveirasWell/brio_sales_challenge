@@ -3,6 +3,7 @@
 require "bigdecimal"
 
 require_relative "sales_taxes/item"
+require_relative "sales_taxes/item/category"
 require_relative "sales_taxes/receipt"
 require_relative "sales_taxes/rules"
 require_relative "sales_taxes/parser"

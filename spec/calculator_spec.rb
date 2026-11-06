@@ -8,7 +8,8 @@ RSpec.describe SalesTaxes::Calculator do
     "1 imported book at 1.00" => "0.05",
     "3 imported boxes of chocolates at 11.25" => "1.80",
     "1 music CD at 0.00" => "0.00",
-    "1 Imported Book at 10.00" => "0.50"
+    "1 Imported Book at 10.00" => "0.50",
+    "1 imported packet of cigarettes at 10.00" => "2.50"
   }.each do |line, tax|
     it "charges #{tax} sales tax on #{line.inspect}" do
       expect(sales_taxes(line)).to eq(BigDecimal(tax))

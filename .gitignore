@@ -1,2 +1,4 @@
 /.bundle/
 /vendor/
+.headroom_wrap_marker.json
+.serena/
