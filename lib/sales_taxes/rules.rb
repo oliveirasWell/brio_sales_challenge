@@ -5,8 +5,7 @@ module SalesTaxes
     BASIC_RATE = BigDecimal("0.10")
     IMPORT_RATE = BigDecimal("0.05")
 
-    EXEMPT_PRODUCTS = %w[book chocolate pill].freeze
-    EXEMPT_PATTERN = /\b(?:#{EXEMPT_PRODUCTS.join("|")})s?\b/i
+    EXEMPT_PATTERN = /\b(?:book|chocolate|pill)s?\b/i
 
     module_function
 
