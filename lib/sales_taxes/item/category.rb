@@ -9,8 +9,9 @@ module SalesTaxes
     KEYWORDS = {
         'book' => EXEMPT,
         'chocolate' => EXEMPT,
-        'pills' => EXEMPT,
+        'pill' => EXEMPT,
         'cigarette' => EVIL,   
+        'whiskey' => EVIL,   
     }
 
     module_function
