@@ -3,15 +3,16 @@
 module SalesTaxes
   class Receipt
     class Line
-      attr_reader :item, :tax
+      attr_reader :item, :tax, :discount
 
-      def initialize(item:, tax:)
+      def initialize(item:, tax:, discount:)
         @item = item
         @tax = tax
+        @discount = discount
         freeze
       end
 
-      def total = (item.unit_price * item.quantity) + tax
+      def total = (item.unit_price * item.quantity) + tax - discount
     end
 
     attr_reader :lines

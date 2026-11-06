@@ -20,7 +20,7 @@ module SalesTaxes
 
       quantity, name, price = match.values_at(:quantity, :name, :price)
 
-      Item.new(quantity: Integer(quantity), name:, unit_price: BigDecimal(price))
+      Item.new(quantity: Integer(quantity), name:, unit_price: BigDecimal(price), category: Item::Category.for(name:))
     end
   end
 end
