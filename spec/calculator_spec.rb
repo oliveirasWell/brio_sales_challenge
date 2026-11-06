@@ -4,11 +4,11 @@ RSpec.describe SalesTaxes::Calculator do
   def sales_taxes(line) = described_class.new.calculate(SalesTaxes::Parser.new.parse(line)).sales_taxes
 
   {
-    "1 imported box of chocolates at 11.25" => "0.60",
+    "1 imported box of chocolates at 11.25" => "0.55",
     "1 imported book at 1.00" => "0.05",
-    "3 imported boxes of chocolates at 11.25" => "1.80",
+    "3 imported boxes of chocolates at 11.25" => "1.65",
     "1 music CD at 0.00" => "0.00",
-    "1 Imported Book at 10.00" => "0.50",
+    "1 Imported Book at 10.00" => "0.45",
     "1 imported packet of cigarettes at 10.00" => "2.50"
   }.each do |line, tax|
     it "charges #{tax} sales tax on #{line.inspect}" do

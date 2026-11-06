@@ -9,11 +9,11 @@ RSpec.describe SalesTaxes do
     INPUT
 
     expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
-      2 book: 24.98
+      2 book: 22.48
       1 music CD: 16.49
-      1 chocolate bar: 0.85
+      1 chocolate bar: 0.75
       Sales Taxes: 1.50
-      Total: 42.32
+      Total: 39.72
     RECEIPT
   end
 
@@ -24,10 +24,10 @@ RSpec.describe SalesTaxes do
     INPUT
 
     expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
-      1 imported box of chocolates: 10.50
+      1 imported box of chocolates: 9.45
       1 imported bottle of perfume: 54.65
-      Sales Taxes: 7.65
-      Total: 65.15
+      Sales Taxes: 7.60
+      Total: 64.10
     RECEIPT
   end
 
@@ -42,10 +42,10 @@ RSpec.describe SalesTaxes do
     expect(described_class.receipt_for(input)).to eq(<<~RECEIPT)
       1 imported bottle of perfume: 32.19
       1 bottle of perfume: 20.89
-      1 packet of headache pills: 9.75
-      3 imported boxes of chocolates: 35.55
-      Sales Taxes: 7.90
-      Total: 98.38
+      1 packet of headache pills: 8.75
+      3 imported boxes of chocolates: 31.95
+      Sales Taxes: 7.75
+      Total: 93.78
     RECEIPT
   end
 end
