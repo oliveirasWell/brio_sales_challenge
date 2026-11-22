@@ -18,7 +18,9 @@ module SalesTaxes
     def parse_line(line)
       match = LINE_FORMAT.match(line) or raise ParseError, "Invalid line: #{line.inspect}"
 
-      Item.new(quantity: Integer(match[:quantity]), name: match[:name], unit_price: BigDecimal(match[:price]))
+      quantity, name, price = match.values_at(:quantity, :name, :price)
+
+      Item.new(quantity: Integer(quantity), name:, unit_price: BigDecimal(price))
     end
   end
 end

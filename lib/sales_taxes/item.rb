@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 
 module SalesTaxes
-  class Item
-    attr_reader :quantity, :name, :unit_price
-
-    def initialize(quantity:, name:, unit_price:)
-      @quantity = quantity
-      @name = name.dup.freeze
-      @unit_price = unit_price
-      freeze
-    end
-
+  Item = Data.define(:quantity, :name, :unit_price) do
     def imported? = name.match?(/\bimported\b/i)
   end
 end
